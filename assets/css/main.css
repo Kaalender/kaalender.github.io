@@ -1337,6 +1337,7 @@
 	}
 
 	form input[type="text"],
+	form input[type="number"],
 	form input[type="email"]
 	input[type="password"],
 	form select,
@@ -1355,7 +1356,7 @@
 		line-height: 1.25em;
 		padding: 0.75em 1em 0.75em 1em;
 	}
-
+		form input[type="number"]:focus,
 		form input[type="text"]:focus,
 		form input[type="email"]
 		input[type="password"]:focus,
@@ -1605,6 +1606,7 @@
 	}
 
 		#footer-wrapper form input[type="text"],
+		#footer-wrapper form input[type="number"],
 		#footer-wrapper form input[type="email"],
 		#footer-wrapper form input[type="password"],
 		#footer-wrapper form select,
@@ -1613,6 +1615,7 @@
 		}
 
 			#footer-wrapper form input[type="text"]:focus,
+			#footer-wrapper form input[type="number"]:focus,
 			#footer-wrapper form input[type="email"]:focus,
 			#footer-wrapper form input[type="password"]:focus,
 			#footer-wrapper form select:focus,
