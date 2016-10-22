@@ -222,16 +222,18 @@
 										</div>
 										<div class="row">
 											<div class="6u 12u(mobile)">
-												<input type="number" min="1" step="1" name="quantity" id="quantity" placeholder="Aantal" ng-model="currentOrder.quantity" ng-min="1" integer required/>
+												<input type="number" min="1" step="1" name="quantity" id="quantity" placeholder="Aantal"
+												ng-model="currentOrder.quantity" ng-min="1" integer required ng-change="orderForm.contribution.$validate()"/>
 												<span class="alert-danger" ng-show="orderForm.quantity.$error.number || orderForm.quantity.$error.required || orderForm.quantity.$error.min|| orderForm.quantity.$error.integer">
 												Aantal moet een getal en minstens 1 zijn.
 												</span>
 												<span ng-show="orderForm.quantity.$error.integer"> geen integer</span>
-												{{orderForm.quantity.$error}}
 											</div>
 											<div class="6u 12u(mobile)">
 												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage"
-												ng-model="currentOrder.contribution" required ui-validate=" 'validateContribution($value)' "/>
+												ng-model="currentOrder.contribution" required ui-validate="{minContribution:'validateContribution($value)'}"/>
+												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && currentOrder.address == null">Minimale bijdrage voor een kaalender is 10 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*10}} euro.</span>
+												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && currentOrder.address != null">Minimale bijdrage voor een kaalender met verzending is 13 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*13}} euro.</span>
 											</div>
 										</div>
 										<div class="row 200%">
