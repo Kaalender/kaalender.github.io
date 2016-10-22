@@ -199,27 +199,39 @@
 						</div>
 						<div class="row">
 							<div class="12u">
-								<form>
+								<form name="orderForm">
 									<div>
 										<div class="row">
 											<div class="6u 12u(mobile)">
-												<input type="text" name="name" id="name" placeholder="Naam" ng-model="currentOrder.name"/>
+												<input type="text" name="name" id="name" placeholder="Naam" ng-model="currentOrder.name" ng-minlength="5" required/>
+												<span class="alert-danger" ng-show="orderForm.name.$error.minlength || orderForm.name.$error.required">
+													Naam is verplicht en moet minimaal 5 tekens lang zijn.
+												</span>
 											</div>
 											<div class="6u 12u(mobile)">
-												<input type="text" name="email" id="email" placeholder="Email" ng-model="currentOrder.email"/>
+												<input type="email" name="email" id="email" placeholder="Email" ng-model="currentOrder.email" required/>
+												<span class="alert-danger" ng-show="orderForm.email.$error.email || orderForm.email.$error.required">
+													Email is verplicht en moet geldig zijn.
+												</span>
 											</div>
 										</div>
 										<div class="row">
 											<div class="12u">
-												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.email"></textarea>
+												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.address" required></textarea>
 											</div>
 										</div>
 										<div class="row">
 											<div class="6u 12u(mobile)">
-												<input type="number" min="1" step="1" name="quantity" id="quantity" placeholder="Aantal" ng-model="currentOrder.quantity"/>
+												<input type="number" min="1" step="1" name="quantity" id="quantity" placeholder="Aantal" ng-model="currentOrder.quantity" ng-min="1" integer required/>
+												<span class="alert-danger" ng-show="orderForm.quantity.$error.number || orderForm.quantity.$error.required || orderForm.quantity.$error.min|| orderForm.quantity.$error.integer">
+												Aantal moet een getal en minstens 1 zijn.
+												</span>
+												<span ng-show="orderForm.quantity.$error.integer"> geen integer</span>
+												{{orderForm.quantity.$error}}
 											</div>
 											<div class="6u 12u(mobile)">
-												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage" ng-model="currentOrder.contribution"/>
+												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage"
+												ng-model="currentOrder.contribution" required ui-validate=" 'validateContribution($value)' "/>
 											</div>
 										</div>
 										<div class="row 200%">
@@ -284,6 +296,8 @@
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 			<!-- order app -->
 			<script src="assets/js/orders.js"></script>
+			<!-- angular ui validate library -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-validate/1.2.2/validate.min.js"></script>
 
 	</body>
 </html>
