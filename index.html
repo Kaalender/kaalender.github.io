@@ -199,34 +199,34 @@
 						</div>
 						<div class="row">
 							<div class="12u">
-								<form method="post" action="#">
+								<form>
 									<div>
 										<div class="row">
 											<div class="6u 12u(mobile)">
-												<input type="text" name="name" id="name" placeholder="Naam" ng-bind="currentOrder.name"/>
+												<input type="text" name="name" id="name" placeholder="Naam" ng-model="currentOrder.name"/>
 											</div>
 											<div class="6u 12u(mobile)">
-												<input type="text" name="email" id="email" placeholder="Email" ng-bind="currentOrder.email"/>
+												<input type="text" name="email" id="email" placeholder="Email" ng-model="currentOrder.email"/>
 											</div>
 										</div>
 										<div class="row">
 											<div class="12u">
-												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-bind="currentOrder.email"></textarea>
+												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.email"></textarea>
 											</div>
 										</div>
 										<div class="row">
 											<div class="6u 12u(mobile)">
-												<input type="number" name="quantity" id="quantity" placeholder="Aantal" ng-bind="currentOrder.quantity"/>
+												<input type="number" min="1" step="1" name="quantity" id="quantity" placeholder="Aantal" ng-model="currentOrder.quantity"/>
 											</div>
 											<div class="6u 12u(mobile)">
-												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage" ng-bind="currentOrder.contribution"/>
+												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage" ng-model="currentOrder.contribution"/>
 											</div>
 										</div>
 										<div class="row 200%">
 											<div class="12u">
 												<ul class="actions">
-													<li><input type="submit" value="Send Message" /></li>
-													<li><input type="reset" value="Clear Form" class="alt" /></li>
+													<li><input type="submit" value="Bestel Kaalender" ng-click="printOnConsole()"/></li>
+													<!--<li><input type="reset" value="Clear Form" class="alt" /></li>-->
 												</ul>
 											</div>
 										</div>
