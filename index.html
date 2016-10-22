@@ -4,7 +4,7 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html ng-app="orders">
 	<head>
 		<title>Kaalender</title>
 		<meta charset="utf-8" />
@@ -185,8 +185,8 @@
 				</article>
 			</div>
 		-->
-		<!-- Contact -->
-			<div class="wrapper style1">
+		<!-- order form -->
+			<div class="wrapper style1" ng-controller="OrderCtrl">
 				<article id="bestellen" class="container 75%">
 					<header>
 						<h2>Bestel de kaalender</h2>
@@ -203,20 +203,23 @@
 									<div>
 										<div class="row">
 											<div class="6u 12u(mobile)">
-												<input type="text" name="name" id="name" placeholder="Name" />
+												<input type="text" name="name" id="name" placeholder="Naam" ng-bind="currentOrder.name"/>
 											</div>
 											<div class="6u 12u(mobile)">
-												<input type="text" name="email" id="email" placeholder="Email" />
+												<input type="text" name="email" id="email" placeholder="Email" ng-bind="currentOrder.email"/>
 											</div>
 										</div>
 										<div class="row">
 											<div class="12u">
-												<input type="text" name="subject" id="subject" placeholder="Subject" />
+												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-bind="currentOrder.email"></textarea>
 											</div>
 										</div>
 										<div class="row">
-											<div class="12u">
-												<textarea name="message" id="message" placeholder="Message"></textarea>
+											<div class="6u 12u(mobile)">
+												<input type="number" name="quantity" id="quantity" placeholder="Aantal" ng-bind="currentOrder.quantity"/>
+											</div>
+											<div class="6u 12u(mobile)">
+												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage" ng-bind="currentOrder.contribution"/>
 											</div>
 										</div>
 										<div class="row 200%">
