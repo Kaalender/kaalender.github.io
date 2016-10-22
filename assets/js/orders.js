@@ -16,22 +16,23 @@ app.controller('OrderCtrl', function($scope,$http){
   };
 
   $scope.saveOrder = function(){
-    API_KEY = "9e3f03d341393fe5ef9d291c7b56ff59f0529";
+    CORS_API_KEY = "580badd72fd337b07bc48e2a";
     url = "https://kaalender-d711.restdb.io/rest/orders/";
-    $http({
-      method: 'POST',
-      url: url,
-      header:{
-        "x-apikey": API_KEY
+    var ajaxSettings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://kaalender-d711.restdb.io/rest/orders",
+      "method": "POST",
+      "headers": {
+        "x-apikey": CORS_API_KEY,
+        "content-type": "application/json"
       },
-      data:$scope.currentOrder
-    }).then(function successCallback(response) {
-      console.log("success");
-      console.log(response);
-    }, function errorCallback(response) {
-      // called asynchronously if an error occurs
-      // or server returns response with an error status.
-      console.log("error");
+      "processData": false,
+      data:JSON.stringify($scope.currentOrder)
+    };
+    $.ajax(ajaxSettings)
+    .done(function (response) {
+      console.log("done");
       console.log(response);
     });
 
