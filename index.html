@@ -223,7 +223,9 @@
 										</div>
 										<div class="row">
 											<div class="12u">
-												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.address" ng-show="currentOrder.shipping"></textarea>
+												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.address" ng-show="currentOrder.shipping" ng-minlength="10" ></textarea>
+												<span class="alert-danger" ng-show="currentOrder.shipping && (orderForm.address.$error.minlength)">
+													Adres is verplicht en moet minimaal 10 tekens lang zijn.
 											</div>
 										</div>
 										<div class="row">
@@ -247,7 +249,7 @@
 										<div class="row 200%">
 											<div class="12u">
 												<ul class="actions">
-													<li><input type="submit" value="Bestel Kaalender" ng-click="printOnConsole()"/></li>
+													<li><input type="submit" value="Bestel Kaalender" ng-click="saveOrder()"/></li>
 													<!--<li><input type="reset" value="Clear Form" class="alt" /></li>-->
 												</ul>
 											</div>
