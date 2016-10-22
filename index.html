@@ -191,6 +191,7 @@
 					<header>
 						<h2>Bestel de kaalender</h2>
 						<p class="left">Een kaalender kost 10 euro per stuk. Als je kaalender opgestuurd moet worden, dan kost 1 stuk 13 euro.</p>
+						<p class="left">Dit is echter de prijs om de kosten te dekken. Om bednet een extra duwtje in de rug te geven, kan je ook een bedrag doneren.</p>
 						<p class="left">Betalen kan door het verschuldigde bedrag over te schrijven op <code>BE16 4636 1927 7174</code> met vermelding 'Kaalender'</p>
 					</header>
 					<div>
@@ -218,7 +219,8 @@
 										</div>
 										<div class="row">
 											<div class="3u left">
-												<input type="checkbox" name="shipping" id="shipping" ng-model="currentOrder.shipping" ng-change="orderForm.contribution.$validate()">Kaalender opsturen<br/>
+												<input type="checkbox" name="shipping" id="shipping" ng-model="currentOrder.shipping"
+												ng-change="orderForm.contribution.$validate()">Kaalender opsturen<br/>
 											</div>
 										</div>
 										<div class="row">
@@ -232,24 +234,31 @@
 											<div class="6u 12u(mobile)">
 												<span>Aantal kaalenders</span>
 												<input type="number" min="1" step="1" name="quantity" id="quantity" placeholder="Aantal"
-												ng-model="currentOrder.quantity" ng-min="1" integer required ng-change="orderForm.contribution.$validate()"/>
+												ng-model="currentOrder.quantity" ng-min="1" integer required/>
 												<span class="alert-danger" ng-show="orderForm.quantity.$error.number || orderForm.quantity.$error.required || orderForm.quantity.$error.min|| orderForm.quantity.$error.integer">
 												Aantal moet een getal en minstens 1 zijn.
 												</span>
 												<span ng-show="orderForm.quantity.$error.integer"> geen integer</span>
 											</div>
 											<div class="6u 12u(mobile)">
-												<span>Bijdrage</span>
+												<span>Vrije bijdrage</span>
 												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage"
-												ng-model="currentOrder.contribution" required ui-validate="{minContribution:'validateContribution($value)'}"/>
-												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && !currentOrder.shipping">Minimale bijdrage voor een kaalender is 10 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*10}} euro.</span>
-												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && currentOrder.shipping">Minimale bijdrage voor een kaalender met verzending is 13 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*13}} euro.</span>
+												ng-model="currentOrder.contribution" ng-min="0" required/>
+												<span class="alert-danger" ng-show="orderForm.contribution.$error.required">Dit is een verplicht veld.</span>
+												<span class="alert-danger" ng-show="orderForm.contribution.$error.min">Nounou, niet zo gierig :)</span>
 											</div>
+										</div>
+										<div class="row">
+												<div class="12u 12u(mobile)">
+													<div>Gelieve <strong>{{currentOrder.total}} euro</strong> over te schrijven op <strong>BE16 4636 1927 7174</strong></div>
+													<div></div>
+												</div>
 										</div>
 										<div class="row 200%">
 											<div class="12u">
 												<ul class="actions">
 													<li><input type="submit" value="Bestel Kaalender" ng-click="saveOrder()"/></li>
+													<li><input type="submit" value="All orders" ng-click="getAllOrders()"/></li>
 													<!--<li><input type="reset" value="Clear Form" class="alt" /></li>-->
 												</ul>
 											</div>

@@ -1,7 +1,24 @@
 var app = angular.module('orders', ['ui.validate']);
 
 app.controller('OrderCtrl', function($scope,$http){
-  $scope.currentOrder  = {"quantity":1,"contribution":10,"shipping":false};
+  $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15};
+  $scope.allOrders = {};
+  //re-calculate total whenever something changes
+  $scope.$watch(function(){
+    return $scope.currentOrder;
+  },
+  function(newValue,oldValue){
+    var UNIT_COST = 10;
+    var SHIPPING_COST = 3;
+
+    $scope.currentOrder.cost = newValue.quantity * UNIT_COST;
+    if(newValue.shipping){
+      //if shipping out, then add 3 euro
+      $scope.currentOrder.cost = $scope.currentOrder.cost + newValue.quantity * SHIPPING_COST;
+    }
+    $scope.currentOrder.total = $scope.currentOrder.cost + $scope.currentOrder.contribution;
+  },true);
+
   $scope.printOnConsole = function(){
     console.log($scope.currentOrder);
   };
@@ -15,6 +32,28 @@ app.controller('OrderCtrl', function($scope,$http){
     return value >= minValue;
   };
 
+  $scope.getAllOrders = function(){
+    CORS_API_KEY = "580badd72fd337b07bc48e2a";
+    url = "https://kaalender-d711.restdb.io/rest/orders/";
+    var ajaxSettings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://kaalender-d711.restdb.io/rest/orders",
+      "method": "get",
+      "headers": {
+        "x-apikey": CORS_API_KEY,
+        "content-type": "application/json"
+      },
+      "processData": false
+    };
+    $.ajax(ajaxSettings)
+    .done(function (response) {
+      console.log(JSON.parse(response));
+      return response;
+    });
+
+  };
+  $scope.allOrders = $scope.getAllOrders();
   $scope.saveOrder = function(){
     CORS_API_KEY = "580badd72fd337b07bc48e2a";
     url = "https://kaalender-d711.restdb.io/rest/orders/";
@@ -32,8 +71,6 @@ app.controller('OrderCtrl', function($scope,$http){
     };
     $.ajax(ajaxSettings)
     .done(function (response) {
-      console.log("done");
-      console.log(response);
     });
 
   };
