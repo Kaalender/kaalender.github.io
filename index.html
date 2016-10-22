@@ -190,7 +190,8 @@
 				<article id="bestellen" class="container 75%">
 					<header>
 						<h2>Bestel de kaalender</h2>
-						<p>Ornare nulla proin odio consequat sapien vestibulum ipsum sed lorem.</p>
+						<p class="left">Een kaalender kost 10 euro per stuk. Als je kaalender opgestuurd moet worden, dan kost 1 stuk 13 euro.</p>
+						<p class="left">Betalen kan door het verschuldigde bedrag over te schrijven op <code>BE16 4636 1927 7174</code> met vermelding 'Kaalender'</p>
 					</header>
 					<div>
 						<div class="row">
@@ -216,8 +217,13 @@
 											</div>
 										</div>
 										<div class="row">
+											<div class="3u left">
+												<input type="checkbox" name="shipping" id="shipping" ng-model="currentOrder.shipping" ng-change="orderForm.contribution.$validate()">Kaalender opsturen<br/>
+											</div>
+										</div>
+										<div class="row">
 											<div class="12u">
-												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.address" required></textarea>
+												<textarea rows="2" name="address" id="address" placeholder="Adres" ng-model="currentOrder.address" ng-show="currentOrder.shipping"></textarea>
 											</div>
 										</div>
 										<div class="row">
@@ -234,8 +240,8 @@
 												<span>Bijdrage</span>
 												<input type="number" name="contribution" id="contribution" placeholder="Bijdrage"
 												ng-model="currentOrder.contribution" required ui-validate="{minContribution:'validateContribution($value)'}"/>
-												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && currentOrder.address == null">Minimale bijdrage voor een kaalender is 10 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*10}} euro.</span>
-												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && currentOrder.address != null">Minimale bijdrage voor een kaalender met verzending is 13 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*13}} euro.</span>
+												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && !currentOrder.shipping">Minimale bijdrage voor een kaalender is 10 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*10}} euro.</span>
+												<span class="alert-danger" ng-show="orderForm.contribution.$error.minContribution && currentOrder.shipping">Minimale bijdrage voor een kaalender met verzending is 13 euro per stuk. Voor deze bestelling is dit dus {{currentOrder.quantity*13}} euro.</span>
 											</div>
 										</div>
 										<div class="row 200%">
