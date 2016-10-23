@@ -15,8 +15,29 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
 
 
-  <!-- Home -->
+  <!-- Modal OrderState update  -->
+  <div class="modal fade" id="addModal" role="dialog">
+  	<div class="modal-dialog">
+  		<div class="modal-content">
+  			<div class="modal-header">
+  				<button type="button" class="close" data-dismiss="modal"
+  					aria-label="Close">
+  					<span aria-hidden="true">&times;</span>
+  				</button>
+  				<h3 class="modal-title">Add message</h3>
 
+  			</div>
+  			<div class="modal-body">
+  				Modal body
+  			</div>
+  			<div class="modal-footer">
+  				<button type="submit" class="btn btn-primary"
+  					data-dismiss="modal">Add</button>
+  				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  			</div>
+  		</div>
+  	</div>
+  </div>
   <!-- order form -->
   <div class="wrapper style1" ng-controller="OrderCtrl">
     <article id="bestellen" class="container 75%">
@@ -28,7 +49,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
           <div class="12u">
             <table class="table table-striped">
               <thead>
-                <tr><td></td><td>Name</td><td>Email</td><td>Shipping?</td><td>Address</td><td>Quantity</td><td>Contribution</td><td>Total amount</td><td>Order State</td></tr>
+                <tr><td></td><td>Name</td><td>Email</td><td>Shipping?</td><td>Address</td><td>Quantity</td><td>Contribution</td><td>Total amount</td><td>Order State</td><td></td></tr>
               </thead>
               <tbody>
 
@@ -42,13 +63,14 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <td>{{ order.quantity}}</td>
                 <td>{{ order.contribution | currency:"&euro; "}}</td>
                 <td>{{ order.total | currency:"&euro; "}}</td>
-                <td>
-                  <select ng-model="order.orderState" ng-change="updateOrderState(order._id,'test2')">
-                  <option value="betaald">Betaald</option>
-                  <option value="niet betaald">Niet betaald</option>
-                  <option value="verstuurd">Verstuurd</option>
-                </select>
-              </td>
+                <td><select ng-model="order.orderState">
+  <option value="niet betaald">Niet betaald</option>
+  <option value="betaald">Betaald</option>
+  <option value="verstuurd">Verstuurd</option>
+
+</select>
+                  </td>
+                <td><button type="button" class="btn btn-primary" ng-click="updateOrderState(order)" >Update</button></td
 
               </td>
             </tr>

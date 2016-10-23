@@ -3,6 +3,7 @@ var app = angular.module('orders', ['ngResource']);
 app.controller('OrderCtrl', function($scope,$http,$resource){
   $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15};
   $scope.allOrders = [{"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15}];
+  $scope.selectedOrder = null;
   //re-calculate total whenever something changes
   $scope.$watch(function(){
     return $scope.currentOrder;
@@ -93,25 +94,26 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     });
 
   };
-  $scope.updateOrderState = function(id,newOrderState){
+  $scope.setSelectedOrder = function(order){
+    $scope.selectedOrder = order;
+  }
+  $scope.updateOrderState = function(order){
     CORS_API_KEY = "580badd72fd337b07bc48e2a";
     url = "https://kaalender-d711.restdb.io/rest/orders/";
     var ajaxSettings = {
       "async": true,
       "crossDomain": true,
-      "url": "https://kaalender-d711.restdb.io/rest/orders/"+id,
+      "url": "https://kaalender-d711.restdb.io/rest/orders/"+order._id,
       "method": "PUT",
       "headers": {
         "x-apikey": CORS_API_KEY,
         "content-type": "application/json"
       },
       "processData": false,
-      data:{
-        orderState: newOrderState
-      }
+      data:JSON.stringify(order)
     };
-    console.log("dropdown changed for id "+id);
-    console.log("state is now:"+newOrderState);
+    console.log("dropdown changed for id "+order._id);
+    console.log("state is now:"+order.orderState);
 
     $.ajax(ajaxSettings)
     .done(function (response) {
@@ -119,6 +121,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
       console.log(response);
 
     });
+
   };
   $scope.printModal = function() {
     $('#myModal').modal('hide');
