@@ -1,8 +1,8 @@
-var app = angular.module('orders', ['ui.validate']);
+var app = angular.module('orders', ['ngResource']);
 
-app.controller('OrderCtrl', function($scope,$http,$compile){
+app.controller('OrderCtrl', function($scope,$http,$resource){
   $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15};
-  $scope.allOrders = {};
+  $scope.allOrders = [{"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15}];
   //re-calculate total whenever something changes
   $scope.$watch(function(){
     return $scope.currentOrder;
@@ -31,12 +31,27 @@ app.controller('OrderCtrl', function($scope,$http,$compile){
     }
     return value >= minValue;
   };
+  var CORS_API_KEY = "580badd72fd337b07bc48e2a";
+  var OrderService = $resource('https://kaalender-d711.restdb.io/rest/orders/:id',{id: "@id"},{
+	    //add my own new function. In this case, an update is a post to the general url without ids
+	    query:{
+	        //isArray:false
+          headers:{
+            "x-apikey": CORS_API_KEY,
+            "content-type": "application/json"
+          },
+          "crossDomain": true,
+          "processData": false,
+          "async":true
+	    }
+	});
+
 
   $scope.getAllOrders = function(){
     CORS_API_KEY = "580badd72fd337b07bc48e2a";
     url = "https://kaalender-d711.restdb.io/rest/orders/";
     var ajaxSettings = {
-      "async": true,
+      "async": false,
       "crossDomain": true,
       "url": "https://kaalender-d711.restdb.io/rest/orders",
       "method": "get",
@@ -48,12 +63,14 @@ app.controller('OrderCtrl', function($scope,$http,$compile){
     };
     $.ajax(ajaxSettings)
     .done(function (response) {
-      console.log(response);
-      return response;
+      $scope.allOrders=response;
+      //console.log($scope.allOrders);
     });
 
   };
-  $scope.allOrders = $scope.getAllOrders();
+
+  $scope.getAllOrders();
+  //console.log($scope.allOrders);
   $scope.saveOrder = function(){
     CORS_API_KEY = "580badd72fd337b07bc48e2a";
     url = "https://kaalender-d711.restdb.io/rest/orders/";
@@ -75,6 +92,30 @@ app.controller('OrderCtrl', function($scope,$http,$compile){
       $scope.confirmOrder();
     });
 
+  };
+  $scope.updateOrderState = function(id,newOrderState){
+    CORS_API_KEY = "580badd72fd337b07bc48e2a";
+    url = "https://kaalender-d711.restdb.io/rest/orders/";
+    var ajaxSettings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://kaalender-d711.restdb.io/rest/orders",
+      "method": "POST",
+      "headers": {
+        "x-apikey": CORS_API_KEY,
+        "content-type": "application/json"
+      },
+      "processData": false,
+      data:JSON.stringify($scope.currentOrder)
+    };
+    console.log("dropdown changed for id "+id);
+    /*
+    $.ajax(ajaxSettings)
+    .done(function (response) {
+      console.log(response);
+      $scope.confirmOrder();
+    });
+    */
   };
   $scope.printModal = function() {
     $('#myModal').modal('hide');
