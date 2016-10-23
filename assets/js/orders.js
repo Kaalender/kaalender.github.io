@@ -1,7 +1,7 @@
 var app = angular.module('orders', ['ngResource']);
 
 app.controller('OrderCtrl', function($scope,$http,$resource){
-  $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15};
+  $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15,"orderState":"niet betaald"};
   $scope.allOrders = [{"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15}];
   $scope.selectedOrder = null;
   //re-calculate total whenever something changes
