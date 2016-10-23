@@ -111,11 +111,13 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
       }
     };
     console.log("dropdown changed for id "+id);
+    console.log("state is now:"+newOrderState);
 
     $.ajax(ajaxSettings)
     .done(function (response) {
+      console.log("update done");
       console.log(response);
-      
+
     });
   };
   $scope.printModal = function() {
