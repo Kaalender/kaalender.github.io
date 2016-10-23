@@ -99,23 +99,24 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     var ajaxSettings = {
       "async": true,
       "crossDomain": true,
-      "url": "https://kaalender-d711.restdb.io/rest/orders",
-      "method": "POST",
+      "url": "https://kaalender-d711.restdb.io/rest/orders/"+id,
+      "method": "PUT",
       "headers": {
         "x-apikey": CORS_API_KEY,
         "content-type": "application/json"
       },
       "processData": false,
-      data:JSON.stringify($scope.currentOrder)
+      data:{
+        orderState: newOrderState
+      }
     };
     console.log("dropdown changed for id "+id);
-    /*
+
     $.ajax(ajaxSettings)
     .done(function (response) {
       console.log(response);
-      $scope.confirmOrder();
+      
     });
-    */
   };
   $scope.printModal = function() {
     $('#myModal').modal('hide');
