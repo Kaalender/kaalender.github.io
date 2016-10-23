@@ -1,6 +1,10 @@
 
 /*Custom CSS for validation*/
-
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
 .alert-danger {
   background-color: #f2dede;
   border-color: #ebccd1;

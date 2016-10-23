@@ -1,6 +1,6 @@
 var app = angular.module('orders', ['ui.validate']);
 
-app.controller('OrderCtrl', function($scope,$http){
+app.controller('OrderCtrl', function($scope,$http,$compile){
   $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15};
   $scope.allOrders = {};
   //re-calculate total whenever something changes
@@ -76,9 +76,19 @@ app.controller('OrderCtrl', function($scope,$http){
     });
 
   };
+  $scope.printModal = function() {
+    $('#myModal').modal('hide');
+    //remove elements not shown by angular
+    $("#myModal").find(".ng-hide").remove();
+    //remove buttons
+    $("#myModal").find(".modal-btn").remove();
 
+    var content = $("#myModal")[0].innerHTML;
+    var popupWin = window.open('', '_blank', '');
+    popupWin.document.open();
+    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="./assets/css/main.css" /></head><body onload="window.print()">' + content + '</body></html>');
+  }
   $scope.confirmOrder = function(){
     $('#myModal').modal('show');
-    //alert("Bestelling is goed ontvangen. Gelieve "+$scope.currentOrder.total+" euro over te schrijven naar BE16 4636 1927 7174 met vermelding 'Kaalender'");
   };
 });
