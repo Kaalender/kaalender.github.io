@@ -253,7 +253,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 								<div class="row">
 									<div class="12u 12u(mobile)">
 										<div class="alert-info" ng-hide="orderForm.$valid">De bestelknop verschijnt zodra alles juist ingevuld is.</div>
-										<div>Gelieve <strong>{{currentOrder.total}} euro</strong> over te schrijven op <strong>BE16 4636 1927 7174</strong></div>
+										<div>Gelieve <strong>{{currentOrder.total | currency:"&euro; "}}</strong> over te schrijven op <strong>BE16 4636 1927 7174</strong></div>
 										<div></div>
 									</div>
 								</div>
@@ -269,7 +269,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 												<div class="modal-body">
 													<p>
 														Bedankt voor het bestellen van {{currentOrder.quantity}} kaalenders.
-													Je moet enkel nog {{currentOrder.total}} euro overschrijven naar <strong>BE16 4636 1927 7174</strong>.
+													Je moet enkel nog <strong>{{currentOrder.total| currency:"&euro; "}}</strong> overschrijven naar <strong>BE16 4636 1927 7174</strong>.
 													<span ng-show="currentOrder.shipping"><br/>De kaalenders worden opgestuurd naar:<br/>
 
 														{{currentOrder.address}}
