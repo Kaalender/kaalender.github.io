@@ -48,7 +48,7 @@ app.controller('OrderCtrl', function($scope,$http){
     };
     $.ajax(ajaxSettings)
     .done(function (response) {
-      console.log(JSON.parse(response));
+      console.log(response);
       return response;
     });
 
@@ -71,7 +71,14 @@ app.controller('OrderCtrl', function($scope,$http){
     };
     $.ajax(ajaxSettings)
     .done(function (response) {
+      console.log(response);
+      $scope.confirmOrder();
     });
 
+  };
+
+  $scope.confirmOrder = function(){
+    $('#myModal').modal('show');
+    //alert("Bestelling is goed ontvangen. Gelieve "+$scope.currentOrder.total+" euro over te schrijven naar BE16 4636 1927 7174 met vermelding 'Kaalender'");
   };
 });
