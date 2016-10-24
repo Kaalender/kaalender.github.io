@@ -63,7 +63,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <td>{{ order.quantity}}</td>
                 <td>{{ order.contribution | currency:"&euro; "}}</td>
                 <td>{{ order.total | currency:"&euro; "}}</td>
-                <td><select ng-model="order.orderState">
+                <td><select class="form-control" ng-model="order.orderState">
   <option value="niet betaald">Niet betaald</option>
   <option value="betaald">Betaald</option>
   <option value="verstuurd">Verstuurd</option>
