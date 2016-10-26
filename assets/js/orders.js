@@ -69,13 +69,12 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
       },
       "processData": false
     };
-	if($scope.authenticated){
+	
     $.ajax(ajaxSettings)
     .done(function (response) {
       $scope.allOrders=response;
       //console.log($scope.allOrders);
     });
-	}
 
   };
 
