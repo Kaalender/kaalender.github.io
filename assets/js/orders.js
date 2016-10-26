@@ -9,7 +9,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
 	  var password = prompt("Please enter a password",null);
 	  $scope.authenticated = window.btoa(password) =='Y2NjYw==';	  
   }
-  $scope.authenticate();
+  //$scope.authenticate();
 
   //re-calculate total whenever something changes
   $scope.$watch(function(){
