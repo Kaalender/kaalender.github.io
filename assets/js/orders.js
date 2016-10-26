@@ -4,7 +4,12 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
   $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15,"orderState":"niet betaald"};
   $scope.allOrders = [{"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15}];
   $scope.selectedOrder = null;
-
+  $scope.authenticated = false;
+  $scope.authenticate = function(){
+	  var password = prompt("Please enter a password",null);
+	  $scope.authenticated = window.btoa(password) =='Y2NjYw==';	  
+  }
+  $scope.authenticate();
 
   //re-calculate total whenever something changes
   $scope.$watch(function(){
@@ -64,11 +69,13 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
       },
       "processData": false
     };
+	if($scope.authenticated){
     $.ajax(ajaxSettings)
     .done(function (response) {
       $scope.allOrders=response;
       //console.log($scope.allOrders);
     });
+	}
 
   };
 
