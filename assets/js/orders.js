@@ -98,8 +98,11 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     $.ajax(ajaxSettings)
     .done(function (response) {
       console.log(response);
+	  alert('Je bestelling is bewaard, bedankt!');
+	  $("#info").after('<div class="alert-success">Je bestelling is bewaard, bedankt!</div>');
       $scope.confirmOrder();
-    });
+    })
+	;
 
   };
   $scope.setSelectedOrder = function(order){
