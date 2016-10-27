@@ -47,16 +47,16 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
       <div>
         <div class="row">
           <div class="12u">
-			<input type="checkbox" name="showDetails" id="showDetails" ng-model="showDetails">Details tonen<br/>
+			<input type="checkbox" name="showDetails" id="showDetails" ng-model="showDetails">Details tonen <input type="text" ng-model="searchText"/><br/>
             <table class="table table-striped">
               <thead>
-                <tr><td></td><td>Name</td><td ng-show="showDetails">Email</td><td>Shipping?</td><td ng-show="showDetails">Address</td><td ng-show="showDetails">Quantity</td><td ng-show="showDetails">Contribution</td><td>Total amount</td><td>Order State</td><td></td></tr>
+                <tr><td>Besteldatum</td><td>Name</td><td ng-show="showDetails">Email</td><td>Shipping?</td><td ng-show="showDetails">Address</td><td ng-show="showDetails">Quantity</td><td ng-show="showDetails">Contribution</td><td>Total amount</td><td>Order State</td><td></td></tr>
               </thead>
               <tbody>
 
                 <tr
-                ng-repeat="order in allOrders| orderBy:'-created' track by order._id">
-                <td>{{ order.created}}</td>
+                ng-repeat="order in allOrders|filter :searchText| orderBy:'_created' track by order._id">
+                <td>{{ order._created}}</td>
                 <td>{{ order.name}}</td>
                 <td ng-show="showDetails">{{ order.email}}</td>
                 <td>{{ order.shipping}}</td>
