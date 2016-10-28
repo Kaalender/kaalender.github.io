@@ -46,41 +46,44 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
       </header>
       <div class="container">
 		<div class="row">
-			<div class="3u">
+			
 				<input type="checkbox" name="showDetails" id="showDetails" ng-model="showDetails">Details tonen 
-			</div>
-			<div class="3u">
+			
 				<input type="text" ng-model="searchText" placeholder="geef een zoekterm in"/>
-			</div>
+				<button type="button" class="btn btn-primary" ng-click="exportData()" >Exporteer</button>
+				<button type="button" class="btn btn-primary" ng-click="getAllOrders()" >Herladen</button>
+			
 		</div>
         <div class="row">
-          <div class="12u">
-            <table class="table table-striped">
+          <div class="col-md-12" id="exportable">
+            <table class="table table-striped" id="orderTable">
               <thead>
-                <tr><td ng-show="showDetails">Besteldatum</td><td>Name</td><td ng-show="showDetails">Email</td><td>Shipping?</td><td ng-show="showDetails">Address</td><td ng-show="showDetails">Quantity</td><td ng-show="showDetails">Contribution</td><td>Total amount</td><td>Order State</td><td></td></tr>
+                <tr><td></td><td ng-show="showDetails">Besteldatum</td><td>Name</td><td ng-show="showDetails">Email</td><td>Shipping?</td><td ng-show="showDetails">Address</td><td ng-show="showDetails">Quantity</td><td ng-show="showDetails">Contribution</td><td>Total amount</td><td>Order State</td><td></td></tr>
               </thead>
               <tbody>
 
                 <tr
                 ng-repeat="order in allOrders|filter :searchText| orderBy:'_created' track by order._id">
+				<td><input type="checkbox" ng-model="order.selected"></td>
                 <td ng-show="showDetails">{{ order._created}}</td>
                 <td>{{ order.name}}</td>
                 <td ng-show="showDetails">{{ order.email}}</td>
                 <td>{{ order.shipping}}</td>
 				
-                <td ng-show="showDetails">{{ order.address}}</td>
+                <td ng-show="showDetails" ng-bind-html="order.address | formatAddress"></td>
 				
                 <td ng-show="showDetails">{{ order.quantity}}</td>
                 <td ng-show="showDetails">{{ order.contribution | currency:"&euro; "}}</td>
                 <td>{{ order.total | currency:"&euro; "}}</td>
-                <td><select class="form-control" ng-model="order.orderState">
-  <option value="niet betaald">Niet betaald</option>
-  <option value="betaald">Betaald</option>
-  <option value="verstuurd">Verstuurd</option>
+                <td>
+					<select class="form-control" ng-model="order.orderState">
+					  <option value="niet betaald">Niet betaald</option>
+					  <option value="betaald">Betaald</option>
+					  <option value="verstuurd">Verstuurd</option>
 
-</select>
-                  </td>
-         <td><button type="button" class="btn btn-primary" ng-click="updateOrderState(order)" >Update</button></td>      
+					</select>
+				</td>
+				<td><button type="button" class="btn btn-primary" ng-click="updateOrderState(order)" >Update</button></td>      
 
             
             </tr>
@@ -115,8 +118,14 @@ src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></scr
 src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.5.8/angular-resource.min.js"></script>
 <!-- NGRoute -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+<!-- ngSanitize -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
 <!-- order app -->
 <script src="../assets/js/orders.js"></script>
+<!-- file saver for export plugin-->
+<script src="https://rawgithub.com/eligrey/FileSaver.js/master/FileSaver.js" type="text/javascript"></script>
+<!-- export to excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/js/tableexport.min.js"></script>
 
 
 </body>
