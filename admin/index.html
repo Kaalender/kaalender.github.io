@@ -46,36 +46,36 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
       </header>
       <div class="container">
 		<div class="row">
-			
-				<input type="checkbox" name="showDetails" id="showDetails" ng-model="showDetails">Details tonen 
-			
+
+				<input type="checkbox" name="showDetails" id="showDetails" ng-model="showDetails">Details tonen
+
 				<input type="text" ng-model="searchText" placeholder="geef een zoekterm in"/>
 				<button type="button" class="btn btn-primary" ng-click="exportData()" >Exporteer</button>
 				<button type="button" class="btn btn-primary" ng-click="getAllOrders()" >Herladen</button>
-			
+
 		</div>
         <div class="row">
           <div class="col-md-12" id="exportable">
-            <table class="table table-striped" id="orderTable">
+            <table class="table table-striped table-sm" id="orderTable">
               <thead>
-                <tr><td></td><td ng-show="showDetails">Besteldatum</td><td>Name</td><td ng-show="showDetails">Email</td><td>Shipping?</td><td ng-show="showDetails">Address</td><td ng-show="showDetails">Quantity</td><td ng-show="showDetails">Contribution</td><td>Total amount</td><td>Order State</td><td></td></tr>
+                <tr><th></th><th>Name</th><th ng-show="showDetails">Email</th><th>Shipping?</th><th ng-show="showDetails">Address</th><th ng-show="showDetails">Quantity</th><th ng-show="showDetails">Contribution</th><th>Total amount</th><th>Order State</th><th></th></tr>
               </thead>
               <tbody>
 
                 <tr
                 ng-repeat="order in allOrders|filter :searchText| orderBy:'_created' track by order._id">
 				<td><input type="checkbox" ng-model="order.selected"></td>
-                <td ng-show="showDetails">{{ order._created}}</td>
+
                 <td>{{ order.name}}</td>
                 <td ng-show="showDetails">{{ order.email}}</td>
                 <td>{{ order.shipping}}</td>
-				
+
                 <td ng-show="showDetails" ng-bind-html="order.address | formatAddress"></td>
-				
+
                 <td ng-show="showDetails">{{ order.quantity}}</td>
                 <td ng-show="showDetails">{{ order.contribution | currency:"&euro; "}}</td>
                 <td>{{ order.total | currency:"&euro; "}}</td>
-                <td>
+                <td>{{order.orderState}}
 					<select class="form-control" ng-model="order.orderState">
 					  <option value="niet betaald">Niet betaald</option>
 					  <option value="betaald">Betaald</option>
@@ -83,9 +83,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
 					</select>
 				</td>
-				<td><button type="button" class="btn btn-primary" ng-click="updateOrderState(order)" >Update</button></td>      
+				<td><button type="button" class="btn btn-primary" ng-click="updateOrderState(order)" >Update</button></td>
 
-            
+
             </tr>
 
           </tbody>
