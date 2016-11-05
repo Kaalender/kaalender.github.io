@@ -1,30 +1,59 @@
 var app = angular.module('orders', ['ngResource','ngSanitize']);
 
 app.filter('formatAddress',function(){
-	return function(text){
-		return text.replace(/([\s,-]*)(\d{4})/g,"\t$2");
-	};
+  return function(text){
+    return text.replace(/([\s,-]*)(\d{4})/g,"\t$2");
+  };
 });
 
+app.service('OrderDaoService',function(){
+  this.getAllOrders = function(){
+    CORS_API_KEY = "580badd72fd337b07bc48e2a";
+    url = "https://kaalender-d711.restdb.io/rest/orders/";
+    var ajaxSettings = {
+      "async": false,
+      "crossDomain": true,
+      "url": "https://kaalender-d711.restdb.io/rest/orders",
+      "method": "get",
+      "headers": {
+        "x-apikey": CORS_API_KEY,
+        "content-type": "application/json"
+      },
+      "processData": false
+    };
+
+    $.ajax(ajaxSettings)
+    .done(function (response) {
+      $scope.allOrders=response;
+      //console.log($scope.allOrders);
+      //add selected property for admin UI
+      angular.forEach($scope.allOrders, function(order) {
+        order.selected = false;
+      });
+
+    });
+
+  };
+});
 app.controller('OrderCtrl', function($scope,$http,$resource){
   $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15,"orderState":"niet betaald"};
   $scope.allOrders = [{"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15}];
   $scope.selectedOrder = null;
   $scope.exportData = function () {
-	  //remove not checked rows
-	  $("#orderTable tr:not(:has(input:checked))").remove();
-        $("#orderTable").tableExport({
-    headings: false,                    // (Boolean), display table headings (th/td elements) in the <thead>
-    footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-    formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
-    fileName: "id",                    // (id, String), filename for the downloaded file
-    bootstrap: true,                   // (Boolean), style buttons using bootstrap
-    position: "bottom",                 // (top, bottom), position of the caption element relative to table
-    ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
-    ignoreCols: [0,1,3,4,6,7,8,9,10,11],                   // (Number, Number[]), column indices to exclude from the exported file
-    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
-});
-    };
+    //remove not checked rows
+    $("#orderTable tr:not(:has(input:checked))").remove();
+    $("#orderTable").tableExport({
+      headings: false,                    // (Boolean), display table headings (th/td elements) in the <thead>
+      footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+      formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+      fileName: "id",                    // (id, String), filename for the downloaded file
+      bootstrap: true,                   // (Boolean), style buttons using bootstrap
+      position: "bottom",                 // (top, bottom), position of the caption element relative to table
+      ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+      ignoreCols: [0,1,3,4,6,7,8,9,10,11],                   // (Number, Number[]), column indices to exclude from the exported file
+      ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
+    });
+  };
 
   //re-calculate total whenever something changes
   $scope.$watch(function(){
@@ -32,7 +61,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
   },
   function(newValue,oldValue){
     var UNIT_COST = 10;
-    var SHIPPING_COST = 3;
+    var SHIPPING_COST = 5;
 
     $scope.currentOrder.cost = newValue.quantity * UNIT_COST;
     if(newValue.shipping){
@@ -56,18 +85,18 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
   };
   var CORS_API_KEY = "580badd72fd337b07bc48e2a";
   var OrderService = $resource('https://kaalender-d711.restdb.io/rest/orders/:id',{id: "@id"},{
-	    //add my own new function. In this case, an update is a post to the general url without ids
-	    query:{
-	        //isArray:false
-          headers:{
-            "x-apikey": CORS_API_KEY,
-            "content-type": "application/json"
-          },
-          "crossDomain": true,
-          "processData": false,
-          "async":true
-	    }
-	});
+    //add my own new function. In this case, an update is a post to the general url without ids
+    query:{
+      //isArray:false
+      headers:{
+        "x-apikey": CORS_API_KEY,
+        "content-type": "application/json"
+      },
+      "crossDomain": true,
+      "processData": false,
+      "async":true
+    }
+  });
 
 
   $scope.getAllOrders = function(){
@@ -84,16 +113,16 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
       },
       "processData": false
     };
-	
+
     $.ajax(ajaxSettings)
     .done(function (response) {
       $scope.allOrders=response;
       //console.log($scope.allOrders);
-	  //add selected property for admin UI
-		angular.forEach($scope.allOrders, function(order) {
-			order.selected = false;
-		});
-	  
+      //add selected property for admin UI
+      angular.forEach($scope.allOrders, function(order) {
+        order.selected = false;
+      });
+
     });
 
   };
@@ -118,19 +147,19 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     $.ajax(ajaxSettings)
     .done(function (response) {
       console.log(response);
-	  alert('Je bestelling is bewaard, bedankt!');
-	  $("#info").after('<div class="alert-success">Je bestelling is bewaard, bedankt!</div>');
+      alert('Je bestelling is bewaard, bedankt!');
+      $("#info").after('<div class="alert-success">Je bestelling is bewaard, bedankt!</div>');
       $scope.confirmOrder();
     })
-	;
+    ;
 
   };
   $scope.setSelectedOrder = function(order){
     $scope.selectedOrder = order;
   }
   $scope.updateOrderState = function(order){
-	  //delete selected property, is only for admin UI
-	  delete order.selected;
+    //delete selected property, is only for admin UI
+    delete order.selected;
     CORS_API_KEY = "580badd72fd337b07bc48e2a";
     url = "https://kaalender-d711.restdb.io/rest/orders/";
     var ajaxSettings = {
