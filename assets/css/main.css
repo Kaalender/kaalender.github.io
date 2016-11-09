@@ -1300,6 +1300,10 @@
 				color: #fff;
 			}
 
+      .table-striped>tr:nth-child(odd){
+   background-color:red;
+}
+
 /* Section/Article */
 
 	section, article {

@@ -37,6 +37,8 @@ app.service('OrderDaoService',function(){
 });
 app.controller('OrderCtrl', function($scope,$http,$resource){
   $scope.currentOrder  = {"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15,"orderState":"niet betaald"};
+  $scope.trackFilter = null;
+  $scope.search = null;
   $scope.allOrders = [{"quantity":1,"cost":10,"contribution":5,"shipping":false,"total":15}];
   $scope.selectedOrder = null;
   $scope.exportData = function () {
@@ -70,7 +72,11 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     }
     $scope.currentOrder.total = $scope.currentOrder.cost + $scope.currentOrder.contribution;
   },true);
-
+  $scope.applyTrackSearch = function(){
+    console.log("search called");
+    console.log($scope.trackFilter);
+    $scope.search = $scope.trackFilter;
+  }
   $scope.printOnConsole = function(){
     console.log($scope.currentOrder);
   };
