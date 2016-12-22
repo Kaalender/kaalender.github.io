@@ -52,7 +52,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
       bootstrap: true,                   // (Boolean), style buttons using bootstrap
       position: "bottom",                 // (top, bottom), position of the caption element relative to table
       ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
-      ignoreCols: [0,1,3,4,6,7,8,9,10,11],                   // (Number, Number[]), column indices to exclude from the exported file
+      ignoreCols: [0,1,3,5,6,7,8,9,10,11],                   // (Number, Number[]), column indices to exclude from the exported file
       ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
     });
   };
@@ -111,7 +111,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     var ajaxSettings = {
       "async": false,
       "crossDomain": true,
-      "url": "https://kaalender-d711.restdb.io/rest/orders",
+      "url": "https://kaalender-d711.restdb.io/rest/orders?metafields=true",
       "method": "get",
       "headers": {
         "x-apikey": CORS_API_KEY,
@@ -122,6 +122,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
 
     $.ajax(ajaxSettings)
     .done(function (response) {
+      console.log(response);
       $scope.allOrders=response;
       //console.log($scope.allOrders);
       //add selected property for admin UI
