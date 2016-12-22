@@ -111,7 +111,7 @@ app.controller('OrderCtrl', function($scope,$http,$resource){
     var ajaxSettings = {
       "async": false,
       "crossDomain": true,
-      "url": "https://kaalender-d711.restdb.io/rest/orders?metafields=true",
+      "url": "https://kaalender-d711.restdb.io/rest/orders?metafields=true&sort=_created&dir=-1",
       "method": "get",
       "headers": {
         "x-apikey": CORS_API_KEY,
